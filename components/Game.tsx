@@ -103,31 +103,60 @@ export default function Game({ initialMode }: GameProps) {
   const playSound = (type: 'click' | 'gameover') => {
     if (!audioCtxRef.current) return;
     if (audioCtxRef.current.state === 'suspended') audioCtxRef.current.resume();
-    // ... (Sound logic remains same)
+
     const ctx = audioCtxRef.current;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
     if (type === 'click') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(400 + Math.random() * 200, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.15);
+      // 模拟钢琴音：混合波形 + 快速Attack + 慢速Decay + 泛音
+      const now = ctx.currentTime;
+      
+      // 随机选取 C 大调音阶的一个音，增加趣味性
+      // C4, D4, E4, F4, G4, A4, B4, C5
+      const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+      const freq = notes[Math.floor(Math.random() * notes.length)];
+
+      // 主振荡器 (Triangle - 更有质感)
+      const osc1 = ctx.createOscillator();
+      osc1.type = 'triangle';
+      osc1.frequency.value = freq;
+
+      // 泛音振荡器 (Sine - 增加厚度)
+      const osc2 = ctx.createOscillator();
+      osc2.type = 'sine';
+      osc2.frequency.value = freq * 2; // 2倍频
+      osc2.detune.value = 5; // 稍微失谐，模拟真实物理特性
+
+      const masterGain = ctx.createGain();
+      
+      // 包络：快速达到最大音量，然后指数衰减
+      masterGain.gain.setValueAtTime(0, now);
+      masterGain.gain.linearRampToValueAtTime(0.3, now + 0.02); // Attack
+      masterGain.gain.exponentialRampToValueAtTime(0.01, now + 1.5); // Decay
+
+      osc1.connect(masterGain);
+      osc2.connect(masterGain);
+      masterGain.connect(ctx.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + 1.5);
+      osc2.stop(now + 1.5);
+
     } else {
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(200, ctx.currentTime);
+      // Game Over 音效保持原样，或者稍微优化
+      osc.type = 'sawtooth'; // 锯齿波更刺耳
+      osc.frequency.setValueAtTime(150, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.5);
-      gain.gain.setValueAtTime(0.5, ctx.currentTime);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
       gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.5);
     }
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
   };
 
   const startGame = (selectedMode: GameMode) => {
