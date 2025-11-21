@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Challenge your reflexes in this addictive piano rhythm game. Play Classic, Arcade, Zen, and Rush modes for free directly in your browser!",
   keywords: ["Piano Tiles", "Don't Tap The White Tile", "Music Game", "Rhythm Game", "Arcade Game", "Reflex Game"],
   authors: [{ name: "Your Name" }],
-  metadataBase: new URL('https://your-piano-tiles-game.com'), // 替换为你的实际域名
+  metadataBase: new URL('https://pianotiles-hdjb.vercel.app'),
   openGraph: {
     title: "Piano Tiles - Don't Tap The White Tile!",
     description: "Challenge your reflexes in this addictive piano rhythm game.",

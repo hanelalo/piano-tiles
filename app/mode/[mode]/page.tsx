@@ -58,12 +58,12 @@ export default function ModePage({ params }: PageProps) {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://your-piano-tiles-game.com" // Replace with env var or config
+      "item": "https://pianotiles-hdjb.vercel.app"
     }, {
       "@type": "ListItem",
       "position": 2,
       "name": `${modeKey} Mode`,
-      "item": `https://your-piano-tiles-game.com/mode/${params.mode}`
+      "item": `https://pianotiles-hdjb.vercel.app/mode/${params.mode}`
     }]
   };
 
