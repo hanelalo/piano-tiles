@@ -1,0 +1,46 @@
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#667eea",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
+export const metadata: Metadata = {
+  title: "Piano Tiles - Play Online Free Rhythm Game",
+  description: "Challenge your reflexes in this addictive piano rhythm game. Play Classic, Arcade, Zen, and Rush modes for free directly in your browser!",
+  keywords: ["Piano Tiles", "Don't Tap The White Tile", "Music Game", "Rhythm Game", "Arcade Game", "Reflex Game"],
+  authors: [{ name: "Your Name" }],
+  metadataBase: new URL('https://your-piano-tiles-game.com'), // 替换为你的实际域名
+  openGraph: {
+    title: "Piano Tiles - Don't Tap The White Tile!",
+    description: "Challenge your reflexes in this addictive piano rhythm game.",
+    type: "website",
+    // images: ['/screenshot.png'],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Piano Tiles - Don't Tap The White Tile!",
+    description: "Challenge your reflexes in this addictive piano rhythm game.",
+    // images: ['/screenshot.png'],
+  },
+  alternates: {
+    canonical: '/',
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+

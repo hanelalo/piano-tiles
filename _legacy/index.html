@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Play Piano Tiles online! A classic rhythm game where you tap black tiles to the beat. Test your speed in Classic, Arcade, Zen, and Rush modes. Free, responsive, and fun for all ages.">
+    <meta name="keywords" content="Piano Tiles, Don't Tap The White Tile, Music Game, Rhythm Game, Arcade Game, Reflex Game, Speed Challenge, Online Game, Free Game">
+    <meta name="author" content="Your Name">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hanelalo.github.io/piano-tiles/">
+    <meta property="og:title" content="Piano Tiles - Don't Tap The White Tile!">
+    <meta property="og:description" content="Challenge your reflexes in this addictive piano rhythm game. Play Classic, Arcade, Zen, and Rush modes for free directly in your browser!">
+    <meta property="og:image" content="https://hanelalo.github.io/piano-tiles/screenshot.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hanelalo.github.io/piano-tiles/">
+    <meta property="twitter:title" content="Piano Tiles - Don't Tap The White Tile!">
+    <meta property="twitter:description" content="Challenge your reflexes in this addictive piano rhythm game. Play Classic, Arcade, Zen, and Rush modes for free directly in your browser!">
+    <meta property="twitter:image" content="https://hanelalo.github.io/piano-tiles/screenshot.png">
+
+    <title>Piano Tiles - Play Online Free Rhythm Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="canonical" href="https://hanelalo.github.io/piano-tiles/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Piano Tiles",
+      "url": "https://hanelalo.github.io/piano-tiles/",
+      "description": "A fast-paced rhythm game where players must tap black tiles while avoiding white ones. Features multiple game modes including Classic, Arcade, Zen, and Rush.",
+      "genre": ["Rhythm", "Arcade", "Music"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Your Name"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- 
+            [PC Left Ad] 
+            Insert Google AdSense code below (Vertical Banner, e.g., 160x600)
+        -->
+        <aside class="ad-container pc-ad ad-left">
+            <!-- <script async src="..."></script> -->
+            <!-- <ins class="adsbygoogle" ...></ins> -->
+            <!-- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+        </aside>
+
+        <!-- 
+            [Mobile Top Ad] 
+            Insert Google AdSense code below (Horizontal Banner, e.g., 320x50 or Responsive)
+        -->
+        <div class="mobile-ad-top">
+             <!-- Ad Code Here -->
+        </div>
+
+        <div class="container">
+            <header role="banner">
+                <h1>🎹 Piano Tiles</h1>
+                <p class="subtitle">Don't Tap The White Tile!</p>
+            </header>
+
+
+        <main id="menu" class="menu" role="main">
+            <section class="game-modes" aria-label="Game Modes">
+                <article class="mode-card" data-mode="classic" role="button" tabindex="0" aria-label="Play Classic Mode">
+                    <div class="mode-icon" aria-hidden="true">🎯</div>
+                    <div class="mode-info">
+                        <h2>Classic</h2>
+                        <p>Tap 50 black tiles</p>
+                        <p class="mode-desc">The fastest wins</p>
+                        <div class="high-score">Best: <span id="best-classic">--</span></div>
+                    </div>
+                </article>
+
+                <article class="mode-card" data-mode="arcade" role="button" tabindex="0" aria-label="Play Arcade Mode">
+                    <div class="mode-icon" aria-hidden="true">🚀</div>
+                    <div class="mode-info">
+                        <h2>Arcade</h2>
+                        <p>Endless mode</p>
+                        <p class="mode-desc">Faster and faster</p>
+                        <div class="high-score">Best: <span id="best-arcade">--</span></div>
+                    </div>
+                </article>
+
+                <article class="mode-card" data-mode="zen" role="button" tabindex="0" aria-label="Play Zen Mode">
+                    <div class="mode-icon" aria-hidden="true">⏱️</div>
+                    <div class="mode-info">
+                        <h2>Zen</h2>
+                        <p>30 Seconds</p>
+                        <p class="mode-desc">How many can you tap?</p>
+                        <div class="high-score">Best: <span id="best-zen">--</span></div>
+                    </div>
+                </article>
+
+                <article class="mode-card" data-mode="rush" role="button" tabindex="0" aria-label="Play Rush Mode">
+                    <div class="mode-icon" aria-hidden="true">⚡</div>
+                    <div class="mode-info">
+                        <h2>Rush</h2>
+                        <p>Extreme Speed</p>
+                        <p class="mode-desc">Test your limit</p>
+                        <div class="high-score">Best: <span id="best-rush">--</span></div>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <div id="game" class="game-container hidden">
+            <div class="game-header">
+                <button id="backBtn" class="btn btn-back">← Back</button>
+                <div class="game-info">
+                    <div class="info-item">
+                        <span class="label">Mode:</span>
+                        <span id="modeDisplay" class="value"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label" id="scoreLabel">Score:</span>
+                        <span id="score" class="value">0</span>
+                    </div>
+                    <div class="info-item hidden" id="speedInfo">
+                        <span class="label">Speed:</span>
+                        <span id="speedDisplay" class="value">1x</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label" id="timerLabel">Time:</span>
+                        <span id="timer" class="value">0.00s</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keyboard Hints -->
+            <div class="keyboard-hints hidden-mobile">
+                <span>D</span><span>F</span><span>J</span><span>K</span>
+            </div>
+
+            <div id="gameBoard" class="game-board"></div>
+
+            <div id="countdown" class="countdown-overlay hidden">
+                <div id="countdownNum" class="countdown-number">3</div>
+            </div>
+
+            <div id="gameOver" class="game-over hidden">
+                <div class="game-over-content">
+                    <h2>🎉 Game Over</h2>
+                    <div class="final-score">
+                        <p id="finalScoreText"></p>
+                        <p id="finalTimeText"></p>
+                    </div>
+                    <div class="game-over-buttons">
+                        <button id="restartBtn" class="btn btn-primary">Play Again</button>
+                        <button id="menuBtn" class="btn btn-secondary">Menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 
+            [Mobile Bottom Ad] 
+            Insert Google AdSense code below (Horizontal Banner, e.g., 320x50 or Responsive)
+        -->
+        <div class="mobile-ad-bottom">
+             <!-- Ad Code Here -->
+        </div>
+
+        <!-- 
+            [PC Right Ad] 
+            Insert Google AdSense code below (Vertical Banner, e.g., 160x600)
+        -->
+        <aside class="ad-container pc-ad ad-right">
+             <!-- Ad Code Here -->
+        </aside>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

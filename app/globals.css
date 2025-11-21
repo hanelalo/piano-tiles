@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  @apply bg-[#2c3e50] text-gray-900 min-h-screen overflow-hidden p-0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.tile {
+  @apply relative cursor-pointer border border-black/10 transform-gpu will-change-[background];
+}
+
+.tile::after {
+  content: '';
+  @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-100;
+}
+
+.tile:active::after {
+  @apply opacity-100;
+}
+
+.tile.black {
+  @apply bg-[#1a1a1a];
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.tile.white {
+  @apply bg-white;
+}
+
+.tile.clicked {
+  background: #888 !important;
+  transition: background 0.1s;
+}
+
+.tile.clicked.success {
+  background: #4CAF50 !important;
+}
+
+.tile.missed {
+  background: #ff4757 !important;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
