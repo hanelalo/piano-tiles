@@ -16,9 +16,9 @@ export default function Home() {
         </div>
 
         {/* Header */}
-        <header className="text-center text-white pt-5 pb-5 shrink-0">
-          <h1 className="text-4xl md:text-[3.5rem] font-bold mb-2.5 drop-shadow-md">🎹 Piano Tiles</h1>
-          <p className="text-base md:text-lg opacity-90">Don&apos;t Tap The White Tile!</p>
+        <header className="text-center text-white pt-3 pb-2 shrink-0">
+          <h1 className="text-2xl md:text-3xl font-bold mb-1 drop-shadow-md">🎹 Piano Tiles</h1>
+          <p className="text-sm md:text-base opacity-90">Don&apos;t Tap The White Tile!</p>
         </header>
 
         {/* Main Game Area (Client Component) */}
