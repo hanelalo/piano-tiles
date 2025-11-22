@@ -31,7 +31,7 @@ const ZEN_TIME = 30;
 const INITIAL_SPEEDS = {
   CLASSIC: 800,
   ARCADE: 600,
-  RUSH: 500,
+  RUSH: 700, // Rush 模式从较慢开始，逐渐加速
 };
 const MIN_SPEED = 150;
 const SPEED_DROP = 2;
@@ -46,6 +46,11 @@ export default function Game({ initialMode }: GameProps) {
   // State
   // If initialMode is provided, start in COUNTDOWN status, otherwise MENU
   const [status, setStatus] = useState<GameStatus>(initialMode ? 'COUNTDOWN' : 'MENU');
+  
+  // 同步 status 到 ref
+  useEffect(() => {
+    statusRef.current = status;
+  }, [status]);
   const [mode, setMode] = useState<GameMode>(initialMode || 'CLASSIC');
   
   const [score, setScore] = useState(0);
@@ -63,7 +68,7 @@ export default function Game({ initialMode }: GameProps) {
 
   // Refs
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const gameLoopRef = useRef<NodeJS.Timeout | null>(null);
+  const gameLoopRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
   const moveCountRef = useRef(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -71,6 +76,9 @@ export default function Game({ initialMode }: GameProps) {
   const speedRef = useRef(800);
   const scoreRef = useRef(0);
   const modeRef = useRef<GameMode>(initialMode || 'CLASSIC');
+  const statusRef = useRef<GameStatus>(initialMode ? 'COUNTDOWN' : 'MENU');
+  const lastUpdateTimeRef = useRef<number>(0);
+  const animationFrameRef = useRef<number | null>(null);
 
   // Effect: When initialMode prop changes (or on mount with prop), start game
   useEffect(() => {
@@ -163,6 +171,7 @@ export default function Game({ initialMode }: GameProps) {
     setMode(selectedMode);
     modeRef.current = selectedMode;
     setStatus('COUNTDOWN');
+    statusRef.current = 'COUNTDOWN';
     setCountdown(3);
     
     let initSpeed = INITIAL_SPEEDS.CLASSIC;
@@ -202,6 +211,7 @@ export default function Game({ initialMode }: GameProps) {
 
   const runGame = () => {
     setStatus('PLAYING');
+    statusRef.current = 'PLAYING';
     startTimeRef.current = Date.now();
 
     timerRef.current = setInterval(() => {
@@ -221,36 +231,54 @@ export default function Game({ initialMode }: GameProps) {
   };
 
   const startGameLoop = () => {
-    if (gameLoopRef.current) clearInterval(gameLoopRef.current);
+    if (gameLoopRef.current !== null) {
+      cancelAnimationFrame(gameLoopRef.current);
+    }
     
-    gameLoopRef.current = setInterval(() => {
-      const currentRows = rowsRef.current;
-      
-      if (moveCountRef.current >= ROWS) {
-         const lastRow = currentRows[currentRows.length - 1];
-         if (lastRow && !lastRow.clicked) {
-            playSound('gameover');
-            endGame(false);
-            return;
-         }
-      }
+    lastUpdateTimeRef.current = performance.now();
 
-      const newRow: TileRow = {
-        id: Date.now(),
-        blackIndex: Math.floor(Math.random() * COLS),
-        clicked: false
-      };
-      
-      const nextRows = [newRow, ...currentRows];
-      if (nextRows.length > ROWS + 1) {
-        nextRows.pop();
-      }
-      
-      setRows(nextRows);
-      rowsRef.current = nextRows;
-      moveCountRef.current++;
+    const animate = (currentTime: number) => {
+      // 继续动画循环（无论状态如何，都要检查，以便能继续运行）
+      if (statusRef.current === 'PLAYING') {
+        const elapsed = currentTime - lastUpdateTimeRef.current;
+        const intervalMs = speedRef.current; // 实时获取最新速度
+        
+        if (elapsed >= intervalMs) {
+          const currentRows = rowsRef.current;
+          
+          if (moveCountRef.current >= ROWS) {
+             const lastRow = currentRows[currentRows.length - 1];
+             if (lastRow && !lastRow.clicked) {
+                playSound('gameover');
+                endGame(false);
+                return;
+             }
+          }
 
-    }, speedRef.current);
+          // 创建新行
+          const newRow: TileRow = {
+            id: Date.now() + Math.random(), // 添加随机数以确保唯一性
+            blackIndex: Math.floor(Math.random() * COLS),
+            clicked: false
+          };
+          
+          const nextRows = [newRow, ...currentRows];
+          if (nextRows.length > ROWS + 1) {
+            nextRows.pop();
+          }
+          
+          rowsRef.current = nextRows;
+          setRows([...nextRows]); // 创建新数组触发重新渲染
+          moveCountRef.current++;
+          lastUpdateTimeRef.current = currentTime;
+        }
+        
+        // 继续动画循环
+        gameLoopRef.current = requestAnimationFrame(animate);
+      }
+    };
+    
+    gameLoopRef.current = requestAnimationFrame(animate);
   };
 
   const handleTileClick = (rowIndex: number, colIndex: number, isBlack: boolean) => {
@@ -296,12 +324,20 @@ export default function Game({ initialMode }: GameProps) {
 
   const stopGame = () => {
     if (timerRef.current) clearInterval(timerRef.current);
-    if (gameLoopRef.current) clearInterval(gameLoopRef.current);
+    if (gameLoopRef.current !== null) {
+      cancelAnimationFrame(gameLoopRef.current);
+      gameLoopRef.current = null;
+    }
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
   };
 
   const endGame = (success: boolean) => {
     stopGame();
     setStatus('GAME_OVER');
+    statusRef.current = 'GAME_OVER';
     
     let isNewRecord = false;
     const currentScore = mode === 'CLASSIC' ? (success ? timer : Infinity) : score;
@@ -457,27 +493,51 @@ export default function Game({ initialMode }: GameProps) {
       {/* Game Board */}
       <div className="flex-1 relative w-full max-w-[400px] mx-auto bg-[#f5f5f5] border-x-4 border-gray-800 overflow-hidden touch-none">
          {/* Grid */}
-         <div className="w-full h-full flex flex-col">
-            {rows.slice(0, 5).map((row, rIdx) => (
-               <div key={row.id} className="w-full flex-1 flex border-b border-gray-200 min-h-0">
+         <div className="w-full h-full flex flex-col relative">
+            {rows.slice(0, 5).map((row, rIdx) => {
+               // 只有第一行（新添加的行）才播放滑入动画
+               const isNewRow = rIdx === 0;
+               return (
+               <div 
+                  key={row.id} 
+                  className={`w-full flex-1 flex border-b border-gray-200 min-h-0 transform-gpu will-change-transform game-row ${
+                     isNewRow ? 'animate-slideInFromTop' : ''
+                  }`}
+               >
                   {[0, 1, 2, 3].map((col) => {
                      const isBlack = row.blackIndex === col;
                      let bgClass = isBlack ? 'bg-[#1a1a1a]' : 'bg-white';
-                     if (isBlack && row.clicked) bgClass = 'bg-gray-400'; // Default clicked
-                     if (isBlack && row.clicked && mode !== 'CLASSIC') bgClass = 'bg-green-500'; // Success color
-                     if (row.missedIndex === col) bgClass = 'bg-red-500 animate-shake'; // Missed
+                     let transitionClass = 'transition-all duration-150 ease-out';
+                     
+                     if (isBlack && row.clicked) {
+                        bgClass = 'bg-gray-400';
+                     }
+                     if (isBlack && row.clicked && mode !== 'CLASSIC') {
+                        bgClass = 'bg-green-500';
+                        transitionClass = 'transition-colors duration-200 ease-out';
+                     }
+                     if (row.missedIndex === col) {
+                        bgClass = 'bg-red-500 animate-shake';
+                     }
                      
                      return (
                        <div 
                          key={col}
-                         onMouseDown={(e) => { handleTileClick(rIdx, col, isBlack); }}
-                         onTouchStart={(e) => { handleTileClick(rIdx, col, isBlack); }}
-                         className={`w-1/4 h-full border-r border-gray-200 relative cursor-pointer ${bgClass}`}
+                         onMouseDown={(e) => { 
+                            e.preventDefault();
+                            handleTileClick(rIdx, col, isBlack); 
+                         }}
+                         onTouchStart={(e) => { 
+                            e.preventDefault();
+                            handleTileClick(rIdx, col, isBlack); 
+                         }}
+                         className={`w-1/4 h-full border-r border-gray-200 relative cursor-pointer transform-gpu will-change-[background-color,transform] ${transitionClass} ${bgClass} active:scale-[0.96] active:brightness-90 select-none`}
                        />
                      );
                   })}
                </div>
-            ))}
+               );
+            })}
          </div>
          
          {/* Countdown Overlay */}

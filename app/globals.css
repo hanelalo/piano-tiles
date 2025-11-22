@@ -14,7 +14,7 @@ body {
 }
 
 .tile {
-  @apply relative cursor-pointer border border-black/10 transform-gpu will-change-[background];
+  @apply relative cursor-pointer border border-black/10 transform-gpu will-change-[background,transform];
 }
 
 .tile::after {
@@ -37,15 +37,28 @@ body {
 
 .tile.clicked {
   background: #888 !important;
-  transition: background 0.1s;
+  transition: background 0.15s ease-out;
 }
 
 .tile.clicked.success {
   background: #4CAF50 !important;
+  transition: background 0.15s ease-out;
 }
 
 .tile.missed {
   background: #ff4757 !important;
+}
+
+/* 游戏行动画优化 */
+.game-row {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* 平滑的颜色过渡 */
+.tile-transition {
+  transition: background-color 0.15s ease-out, transform 0.15s ease-out;
 }
 
 /* Hide scrollbar */
