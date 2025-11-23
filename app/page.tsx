@@ -10,11 +10,6 @@ export default function Home() {
       </aside>
 
       <div className="flex-1 w-full max-w-[500px] min-w-[320px] h-screen flex flex-col relative z-10 bg-gradient-to-br from-[#667eea] to-[#764ba2] shadow-[0_0_50px_rgba(0,0,0,0.5)] md:ring-1 md:ring-white/10">
-        {/* Mobile Top Ad */}
-        <div className="flex md:hidden w-full h-[50px] shrink-0 justify-center items-center bg-transparent overflow-hidden">
-          {/* Mobile Ad Code Here */}
-        </div>
-
         {/* Header */}
         <header className="text-center text-white pt-3 pb-2 shrink-0 relative overflow-hidden">
           {/* Piano Keys Pattern Background - More Realistic */}
@@ -69,11 +64,6 @@ export default function Home() {
 
         {/* Main Game Area (Client Component) */}
         <Game />
-
-        {/* Mobile Bottom Ad */}
-        <div className="flex md:hidden w-full h-[50px] shrink-0 justify-center items-center bg-transparent overflow-hidden">
-          {/* Mobile Ad Code Here */}
-        </div>
       </div>
 
       {/* PC Right Ad */}
