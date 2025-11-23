@@ -65,6 +65,7 @@ export default function Game({ initialMode }: GameProps) {
     RUSH: 0,
   });
   const [result, setResult] = useState<{ success: boolean; isNewRecord: boolean } | null>(null);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   // Refs
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -413,11 +414,116 @@ export default function Game({ initialMode }: GameProps) {
      }
   };
 
+  // Privacy Policy Modal Handler
+  useEffect(() => {
+    const handleOpenPrivacy = () => {
+      setShowPrivacyPolicy(true);
+    };
+    window.addEventListener('openPrivacyPolicy', handleOpenPrivacy);
+    return () => window.removeEventListener('openPrivacyPolicy', handleOpenPrivacy);
+  }, []);
+
+  // Privacy Policy Modal Component
+  const PrivacyPolicyModal = () => {
+    if (!showPrivacyPolicy) return null;
+
+    return (
+      <div 
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fadeIn"
+        onClick={() => setShowPrivacyPolicy(false)}
+      >
+        <div 
+          className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-popIn"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-10">
+            <h2 className="text-xl font-bold text-gray-800">🔒 Privacy Policy</h2>
+            <button
+              onClick={() => setShowPrivacyPolicy(false)}
+              className="text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              ×
+            </button>
+          </div>
+          
+          <div className="p-6 space-y-4 text-sm text-gray-600">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Data Collection</h3>
+              <p className="leading-relaxed">
+                This Piano Tiles game operates entirely in your browser. 
+                We only store your game high scores locally on your device using browser localStorage. 
+                No personal information is collected, transmitted, or stored on our servers.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Local Storage</h3>
+              <p className="leading-relaxed">
+                Your best scores for each game mode are saved locally in your browser's localStorage. 
+                This data remains on your device and is never shared with third parties. 
+                You can clear this data at any time by clearing your browser's cache.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">No Tracking</h3>
+              <p className="leading-relaxed">
+                We do not use cookies, analytics, or any tracking technologies. 
+                Your gameplay is private and not monitored.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Third-Party Services</h3>
+              <p className="leading-relaxed">
+                This game may display advertisements that are served by third-party ad networks. 
+                These networks may collect information according to their own privacy policies. 
+                We are not responsible for the privacy practices of these third parties.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Children's Privacy</h3>
+              <p className="leading-relaxed">
+                This game is suitable for all ages. 
+                We do not knowingly collect personal information from children. 
+                All game data remains local to your device.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">Changes to Privacy Policy</h3>
+              <p className="leading-relaxed">
+                We may update this privacy policy from time to time. 
+                Any changes will be posted on this page with an updated revision date.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-gray-200 text-xs text-gray-500">
+              <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            </div>
+
+            <div className="pt-4">
+              <button
+                onClick={() => setShowPrivacyPolicy(false)}
+                className="w-full bg-primary hover:brightness-110 text-white px-6 py-3 rounded-lg font-bold shadow-lg transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // -- RENDER --
 
   if (status === 'MENU') {
     return (
-      <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-gradient-to-b from-[#f5f7fa] to-white md:bg-white md:rounded-xl">
+      <>
+        <PrivacyPolicyModal />
+        <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-gradient-to-b from-[#f5f7fa] to-white md:bg-white md:rounded-xl relative pb-16">
         {/* Game Mode Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {[
@@ -511,11 +617,14 @@ export default function Game({ initialMode }: GameProps) {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <div className="flex-1 w-full h-full flex flex-col bg-white md:rounded-xl shadow-xl overflow-hidden relative">
+    <>
+      <PrivacyPolicyModal />
+      <div className="flex-1 w-full h-full flex flex-col bg-white md:rounded-xl shadow-xl overflow-hidden relative">
       {/* Game Header */}
       <div className="flex justify-between items-center p-3 bg-gray-50 border-b border-gray-100 z-20 flex-wrap gap-2 shrink-0">
         {initialMode ? (
@@ -637,6 +746,7 @@ export default function Game({ initialMode }: GameProps) {
       <div className="w-full h-[50px] shrink-0 bg-transparent flex items-center justify-center">
         {/* Ad Space Reserved for Future Ads */}
       </div>
-    </div>
+      </div>
+    </>
   );
 }

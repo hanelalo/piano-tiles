@@ -1,4 +1,5 @@
 import Game from "@/components/Game";
+import PrivacyPolicyButton from "@/components/PrivacyPolicyButton";
 
 export default function Home() {
   return (
@@ -74,6 +75,9 @@ export default function Home() {
         <div className="flex md:hidden w-full h-[50px] shrink-0 justify-center items-center bg-transparent overflow-hidden">
           {/* Mobile Ad Code Here */}
         </div>
+
+        {/* Privacy Policy Link - Fixed at Bottom */}
+        <PrivacyPolicyButton />
       </div>
 
       {/* PC Right Ad */}
