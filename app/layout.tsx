@@ -12,22 +12,30 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Piano Tiles - Play Online Free Rhythm Game",
-  description: "Challenge your reflexes in this addictive piano rhythm game. Play Classic, Arcade, Zen, and Rush modes for free directly in your browser!",
+  title: "Piano Tiles - Play Online Free Rhythm Game | Don't Tap The White Tile Game",
+  description: "Play Piano Tiles online free! Challenge your reflexes in this addictive piano rhythm game. This free music game offers Classic, Arcade, Zen, and Rush modes - no download required!",
   keywords: ["Piano Tiles", "Don't Tap The White Tile", "Music Game", "Rhythm Game", "Arcade Game", "Reflex Game"],
   authors: [{ name: "Your Name" }],
-  metadataBase: new URL('https://pianotiles-hdjb.vercel.app'),
+  metadataBase: new URL('https://pianotilesgames.com'),
   openGraph: {
     title: "Piano Tiles - Don't Tap The White Tile!",
-    description: "Challenge your reflexes in this addictive piano rhythm game.",
+    description: "Play Piano Tiles online free! Challenge your reflexes in this addictive piano rhythm game. This free music game offers Classic, Arcade, Zen, and Rush modes - no download required!",
     type: "website",
-    // images: ['/screenshot.png'],
+    url: "https://pianotilesgames.com",
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Piano Tiles - Play Online Free Rhythm Game',
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Piano Tiles - Don't Tap The White Tile!",
-    description: "Challenge your reflexes in this addictive piano rhythm game.",
-    // images: ['/screenshot.png'],
+    description: "Play Piano Tiles online free! Challenge your reflexes in this addictive piano rhythm game. This free music game offers Classic, Arcade, Zen, and Rush modes.",
+    images: ['/og-image.png'],
   },
   alternates: {
     canonical: '/',

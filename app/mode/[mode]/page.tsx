@@ -21,10 +21,22 @@ export async function generateStaticParams() {
 export function generateMetadata({ params }: PageProps): Metadata {
   const mode = params.mode.toLowerCase();
   const modeInfo = {
-    classic: { title: "Classic Mode", desc: "Tap 50 tiles as fast as you can!" },
-    arcade: { title: "Arcade Mode", desc: "Endless challenge with increasing speed." },
-    zen: { title: "Zen Mode", desc: "How many tiles can you tap in 30 seconds?" },
-    rush: { title: "Rush Mode", desc: "Extreme speed for advanced players." },
+    classic: { 
+      title: "Classic Mode", 
+      desc: "Play Piano Tiles Classic Mode free online! Tap 50 black tiles as fast as you can and beat your best time in this free rhythm game!" 
+    },
+    arcade: { 
+      title: "Arcade Mode", 
+      desc: "Free Piano Tiles Arcade Mode - endless challenge with increasing speed. Play online for free and test your limits in this free music game!" 
+    },
+    zen: { 
+      title: "Zen Mode", 
+      desc: "Play Piano Tiles Zen Mode online free! How many black tiles can you tap in 30 seconds? No pressure, just accuracy in this free rhythm game!" 
+    },
+    rush: { 
+      title: "Rush Mode", 
+      desc: "Free Piano Tiles Rush Mode - extreme speed for advanced players. Play online for free and challenge yourself in this fast-paced free music game!" 
+    },
   };
 
   if (!MODES.includes(mode as Mode)) return {};
@@ -36,6 +48,22 @@ export function generateMetadata({ params }: PageProps): Metadata {
     openGraph: {
       title: `Play Piano Tiles: ${info.title}`,
       description: info.desc,
+      type: "website",
+      url: `https://pianotilesgames.com/mode/${mode}`,
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: `Piano Tiles - ${info.title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Play Piano Tiles: ${info.title}`,
+      description: info.desc,
+      images: ['/og-image.png'],
     },
     alternates: {
       canonical: `/mode/${mode}`,
@@ -58,12 +86,12 @@ export default function ModePage({ params }: PageProps) {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://pianotiles-hdjb.vercel.app"
+      "item": "https://pianotilesgames.com"
     }, {
       "@type": "ListItem",
       "position": 2,
       "name": `${modeKey} Mode`,
-      "item": `https://pianotiles-hdjb.vercel.app/mode/${params.mode}`
+      "item": `https://pianotilesgames.com/mode/${params.mode}`
     }]
   };
 

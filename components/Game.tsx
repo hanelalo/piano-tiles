@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Play, RotateCcw, Menu as MenuIcon, Trophy, Timer, Zap, Target } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { analytics } from "@/lib/analytics";
 
 // Types
 type GameMode = 'CLASSIC' | 'ARCADE' | 'ZEN' | 'RUSH';
@@ -215,6 +216,9 @@ export default function Game({ initialMode }: GameProps) {
     setStatus('PLAYING');
     statusRef.current = 'PLAYING';
     startTimeRef.current = Date.now();
+    
+    // 跟踪游戏开始事件
+    analytics.gameStart(modeRef.current);
 
     timerRef.current = setInterval(() => {
       const now = Date.now();
@@ -395,6 +399,17 @@ export default function Game({ initialMode }: GameProps) {
     }
 
     setResult({ success, isNewRecord });
+    
+    // 跟踪游戏完成/失败事件
+    if (success) {
+      if (mode === 'CLASSIC') {
+        analytics.gameComplete(mode, undefined, currentScore);
+      } else {
+        analytics.gameComplete(mode, currentScore);
+      }
+    } else {
+      analytics.gameFail(mode, currentScore === Infinity ? undefined : currentScore);
+    }
   };
 
   // Keyboard Support
@@ -428,21 +443,26 @@ export default function Game({ initialMode }: GameProps) {
 
   const handleBack = () => {
     stopGame();
+    analytics.backToHome(mode);
     if (initialMode) {
       // If came from a dedicated route, go back to home
       window.location.href = '/';
     } else {
       // If in SPA mode, go back to menu
       setStatus('MENU');
+      statusRef.current = 'MENU';
     }
   };
 
   const handleMenuBtn = () => {
-     if (initialMode) {
-       window.location.href = '/';
-     } else {
-       setStatus('MENU');
-     }
+    stopGame();
+    analytics.backToHome(mode);
+    if (initialMode) {
+      window.location.href = '/';
+    } else {
+      setStatus('MENU');
+      statusRef.current = 'MENU';
+    }
   };
 
   // Privacy Policy Modal Component
@@ -765,7 +785,7 @@ export default function Game({ initialMode }: GameProps) {
         {/* Game Information - Combined Section */}
         <div className="bg-white rounded-xl p-5 shadow-md border border-gray-200">
           {/* How to Play Section */}
-          <h2 className="text-xl font-bold text-gray-800 mb-3">🎹 How to Play Piano Tiles</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-3">🎹 How to Play Piano Tiles Online</h2>
           <div className="space-y-3 text-sm text-gray-600 mb-6">
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">Basic Rules:</h3>
@@ -787,7 +807,7 @@ export default function Game({ initialMode }: GameProps) {
             </div>
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">Controls:</h3>
-              <p className="ml-2">You can play using your mouse, touchscreen, or keyboard (D, F, J, K keys).</p>
+              <p className="ml-2">Play Piano Tiles online free using your mouse, touchscreen, or keyboard (D, F, J, K keys). No download required - this browser-based game works instantly!</p>
             </div>
           </div>
 
@@ -796,19 +816,19 @@ export default function Game({ initialMode }: GameProps) {
           <div className="space-y-4 text-sm text-gray-600 mb-6">
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">🎯 Classic Mode</h3>
-              <p className="ml-2">The original Piano Tiles challenge. Tap 50 black tiles as quickly as possible. Your goal is to complete all 50 tiles in the shortest time. Perfect for players who want to beat their personal best!</p>
+              <p className="ml-2">The original Piano Tiles challenge. Tap 50 black tiles as quickly as possible. Your goal is to complete all 50 tiles in the shortest time. Perfect for players who want to beat their personal best! Play Piano Tiles Classic Mode for free.</p>
             </div>
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">⚡ Arcade Mode</h3>
-              <p className="ml-2">Endless mode where the speed gradually increases with each tile you tap. See how many tiles you can hit before making a mistake! The game gets progressively faster, testing your limits.</p>
+              <p className="ml-2">Free Piano Tiles Arcade Mode offers endless gameplay where the speed gradually increases with each tile you tap. See how many tiles you can hit before making a mistake! The game gets progressively faster, testing your limits.</p>
             </div>
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">🧘 Zen Mode</h3>
-              <p className="ml-2">Relax and play at your own pace. You have 30 seconds to tap as many black tiles as possible. No pressure from increasing speed - just focus on accuracy and see how many tiles you can score!</p>
+              <p className="ml-2">Relax and play at your own pace. You have 30 seconds to tap as many black tiles as possible. No pressure from increasing speed - just focus on accuracy and see how many tiles you can score! Play this free online mode anytime.</p>
             </div>
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">🏃 Rush Mode</h3>
-              <p className="ml-2">For expert players! Rush mode starts at a moderate speed and accelerates rapidly. This is the ultimate test of your reflexes and precision. Can you handle the extreme pace?</p>
+              <p className="ml-2">For expert players! Rush mode starts at a moderate speed and accelerates rapidly. This is the ultimate test of your reflexes and precision. Can you handle the extreme pace? Play Rush Mode free online.</p>
             </div>
           </div>
 
@@ -817,12 +837,12 @@ export default function Game({ initialMode }: GameProps) {
           <div className="text-sm text-gray-600 space-y-3">
             <p className="leading-relaxed">
               Piano Tiles (also known as Don't Tap The White Tile or Magic Piano) is a classic rhythm game that became popular worldwide. 
-              The game challenges players to tap only the black tiles while avoiding the white ones as they scroll down the screen. 
+              This online rhythm game Piano Tiles challenges players to tap only the black tiles while avoiding the white ones as they scroll down the screen. 
               Originally developed by Cheetah Mobile, Piano Tiles has become one of the most beloved mobile games, combining simple mechanics with addictive gameplay.
             </p>
             <p className="leading-relaxed">
-              Our online version brings the classic Piano Tiles experience to your browser with smooth animations and multiple game modes. 
-              Test your reflexes, improve your reaction time, and see how fast you can tap without missing a black tile!
+              Play Piano Tiles online for free! Our online version brings the classic Piano Tiles game experience to your browser with smooth animations and multiple game modes. 
+              Test your reflexes, improve your reaction time, and see how fast you can tap without missing a black tile! This free music game requires no download and works directly in your web browser.
             </p>
           </div>
         </div>
@@ -959,9 +979,12 @@ export default function Game({ initialMode }: GameProps) {
                 <button 
                   onClick={() => {
                     if (initialMode) {
+                      // 跟踪游戏重试事件
+                      analytics.gameRetry(mode);
                       // Refresh page to trigger ad refresh
                       window.location.reload();
                     } else {
+                      analytics.gameRetry(mode);
                       startGame(mode);
                     }
                   }}

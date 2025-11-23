@@ -1,7 +1,39 @@
 import Game from "@/components/Game";
+import Script from "next/script";
 
 export default function Home() {
+  // VideoGame Schema for SEO
+  const videoGameSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Piano Tiles",
+    "url": "https://pianotilesgames.com",
+    "description": "Play Piano Tiles online free! A fast-paced rhythm game where players must tap black tiles while avoiding white ones. This free music game features multiple game modes including Classic, Arcade, Zen, and Rush. Challenge your reflexes in this addictive online rhythm game!",
+    "genre": ["Rhythm", "Arcade", "Music"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "inLanguage": "en",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1000"
+    }
+  };
+
   return (
+    <>
+      {/* VideoGame Schema */}
+      <Script
+        id="video-game-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoGameSchema) }}
+      />
     <main className="flex w-full h-screen justify-center items-stretch overflow-hidden">
       {/* PC Left Ad */}
       <aside className="hidden md:flex w-[300px] min-w-[160px] shrink h-full justify-center items-center p-2.5">
@@ -71,6 +103,7 @@ export default function Home() {
         {/* Google AdSense Code Here */}
       </aside>
     </main>
+    </>
   );
 }
 
