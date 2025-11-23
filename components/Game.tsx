@@ -356,13 +356,29 @@ export default function Game({ initialMode }: GameProps) {
     statusRef.current = 'GAME_OVER';
     
     let isNewRecord = false;
-    const currentScore = mode === 'CLASSIC' ? (success ? timer : Infinity) : score;
-    const currentBest = highScores[mode];
     
+    // For Classic mode, calculate the actual time using ref to get accurate timing
+    let currentScore: number;
+    if (mode === 'CLASSIC') {
+      if (success) {
+        // Calculate final time directly from start time ref for accuracy
+        const finalTime = startTimeRef.current > 0 ? (Date.now() - startTimeRef.current) / 1000 : timer;
+        currentScore = finalTime;
+        // Update timer state to show final time
+        setTimer(finalTime);
+      } else {
+        currentScore = Infinity;
+      }
+    } else {
+      currentScore = score;
+    }
+    
+    const currentBest = highScores[mode];
     const newHighScores = { ...highScores };
     
     if (mode === 'CLASSIC') {
        // Classic mode: lower time is better (Infinity means no record yet)
+       // Always save the first successful completion
        if (success && (currentBest === Infinity || currentScore < currentBest)) {
          newHighScores[mode] = currentScore;
          isNewRecord = currentBest === Infinity || currentScore < currentBest;
