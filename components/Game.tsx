@@ -656,7 +656,7 @@ export default function Game({ initialMode }: GameProps) {
         <TermsModal />
         <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-gradient-to-b from-[#f5f7fa] to-white md:bg-white md:rounded-xl" data-game-container>
         {/* Game Mode Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {[
             { 
               id: 'CLASSIC', 
@@ -740,7 +740,7 @@ export default function Game({ initialMode }: GameProps) {
             <a 
               key={m.id}
               href={`/mode/${m.id.toLowerCase()}`}
-              className={`${m.colors.bg} p-5 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex md:flex-col items-center md:text-center gap-4 border-2 ${m.colors.border} ${
+              className={`${m.colors.bg} p-4 lg:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex md:flex-col items-center md:text-center gap-4 border-2 ${m.colors.border} ${
                 isClassic ? 'hover:border-amber-400' :
                 isArcade ? 'hover:border-blue-400' :
                 isZen ? 'hover:border-emerald-400' :
@@ -751,10 +751,10 @@ export default function Game({ initialMode }: GameProps) {
                  <m.icon size={32} className={`${m.colors.icon} transition-colors`} />
               </div>
               <div className="flex-1 text-left md:text-center">
-                <h2 className={`text-xl font-bold ${m.colors.title} mb-1`}>{m.label}</h2>
-                <p className="text-gray-600 text-sm mb-1">{m.desc}</p>
+                <h2 className={`text-lg md:text-xl lg:text-2xl font-bold ${m.colors.title} mb-1`}>{m.label}</h2>
+                <p className="text-gray-600 text-xs md:text-sm mb-1">{m.desc}</p>
                 <p className="text-gray-500 text-xs">{m.sub}</p>
-                <div className={`mt-2 pt-2 border-t ${m.colors.border} text-sm font-bold ${m.colors.score}`}>
+                <div className={`mt-2 pt-2 border-t ${m.colors.border} text-xs md:text-sm font-bold ${m.colors.score}`}>
                   Best: {formatScore(m.id as GameMode, highScores[m.id as keyof HighScores])}
                 </div>
               </div>
