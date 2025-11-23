@@ -84,12 +84,6 @@ export default function ModePage({ params }: PageProps) {
           {/* Mobile Ad Code Here */}
         </div>
 
-        {/* Header */}
-        <header className="text-center text-white pt-3 pb-2 shrink-0">
-          <h1 className="text-2xl md:text-3xl font-bold mb-1 drop-shadow-md">🎹 Piano Tiles</h1>
-          <p className="text-sm md:text-base opacity-90">Don&apos;t Tap The White Tile!</p>
-        </header>
-
         {/* Main Game Area (Client Component) */}
         {/* We pass the uppercase mode (e.g. CLASSIC) to the Game component */}
         <Game initialMode={modeKey as any} />

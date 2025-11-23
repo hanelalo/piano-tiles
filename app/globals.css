@@ -49,16 +49,10 @@ body {
   background: #ff4757 !important;
 }
 
-/* 游戏行动画优化 */
+/* 游戏行优化 - 使用 GPU 加速 */
 .game-row {
   transform: translateZ(0);
   backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* 平滑的颜色过渡 */
-.tile-transition {
-  transition: background-color 0.15s ease-out, transform 0.15s ease-out;
 }
 
 /* Hide scrollbar */

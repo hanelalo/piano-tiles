@@ -418,7 +418,8 @@ export default function Game({ initialMode }: GameProps) {
   if (status === 'MENU') {
     return (
       <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-[#f5f7fa] md:bg-white md:rounded-xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Game Mode Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {[
             { id: 'CLASSIC', icon: Target, label: 'Classic', desc: 'Tap 50 tiles', sub: 'Fastest wins' },
             { id: 'ARCADE', icon: Zap, label: 'Arcade', desc: 'Endless', sub: 'Increasing speed' },
@@ -444,6 +445,71 @@ export default function Game({ initialMode }: GameProps) {
             </a>
           ))}
         </div>
+
+        {/* Game Information - Combined Section */}
+        <div className="bg-white md:bg-gray-50 rounded-xl p-5 shadow-sm border border-gray-100">
+          {/* How to Play Section */}
+          <h2 className="text-xl font-bold text-gray-800 mb-3">How to Play Piano Tiles</h2>
+          <div className="space-y-3 text-sm text-gray-600 mb-6">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">Basic Rules:</h3>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>Tap only the <strong>black tiles</strong> as they scroll down</li>
+                <li>Never tap the <strong>white tiles</strong> or you'll lose</li>
+                <li>Each correctly tapped black tile increases your score</li>
+                <li>Missing a black tile that reaches the bottom ends the game</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">Tips for Success:</h3>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>Stay focused and keep your eyes on the tiles</li>
+                <li>Use multiple fingers for faster tapping</li>
+                <li>Practice regularly to improve your reaction time</li>
+                <li>Don't rush - accuracy is more important than speed</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">Controls:</h3>
+              <p className="ml-2">You can play using your mouse, touchscreen, or keyboard (D, F, J, K keys).</p>
+            </div>
+          </div>
+
+          {/* Game Modes Section */}
+          <h2 className="text-xl font-bold text-gray-800 mb-3 mt-6 pt-6 border-t border-gray-200">Game Modes Explained</h2>
+          <div className="space-y-4 text-sm text-gray-600 mb-6">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">🎯 Classic Mode</h3>
+              <p className="ml-2">The original Piano Tiles challenge. Tap 50 black tiles as quickly as possible. Your goal is to complete all 50 tiles in the shortest time. Perfect for players who want to beat their personal best!</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">⚡ Arcade Mode</h3>
+              <p className="ml-2">Endless mode where the speed gradually increases with each tile you tap. See how many tiles you can hit before making a mistake! The game gets progressively faster, testing your limits.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">🧘 Zen Mode</h3>
+              <p className="ml-2">Relax and play at your own pace. You have 30 seconds to tap as many black tiles as possible. No pressure from increasing speed - just focus on accuracy and see how many tiles you can score!</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-1">🏃 Rush Mode</h3>
+              <p className="ml-2">For expert players! Rush mode starts at a moderate speed and accelerates rapidly. This is the ultimate test of your reflexes and precision. Can you handle the extreme pace?</p>
+            </div>
+          </div>
+
+          {/* Game History Section */}
+          <h2 className="text-xl font-bold text-gray-800 mb-3 mt-6 pt-6 border-t border-gray-200">About Piano Tiles</h2>
+          <div className="text-sm text-gray-600 space-y-3">
+            <p className="leading-relaxed">
+              Piano Tiles (also known as Don't Tap The White Tile or Magic Piano) is a classic rhythm game that became popular worldwide. 
+              The game challenges players to tap only the black tiles while avoiding the white ones as they scroll down the screen. 
+              Originally developed by Cheetah Mobile, Piano Tiles has become one of the most beloved mobile games, combining simple mechanics with addictive gameplay.
+            </p>
+            <p className="leading-relaxed">
+              Our online version brings the classic Piano Tiles experience to your browser with smooth animations and multiple game modes. 
+              Test your reflexes, improve your reaction time, and see how fast you can tap without missing a black tile!
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -451,24 +517,24 @@ export default function Game({ initialMode }: GameProps) {
   return (
     <div className="flex-1 w-full h-full flex flex-col bg-white md:rounded-xl shadow-xl overflow-hidden relative">
       {/* Game Header */}
-      <div className="flex justify-between items-center p-4 bg-gray-50 border-b border-gray-100 z-20">
+      <div className="flex justify-between items-center p-3 bg-gray-50 border-b border-gray-100 z-20 flex-wrap gap-2 shrink-0">
         {initialMode ? (
           <a
             href="/"
             onClick={() => stopGame()} // Ensure game loop stops
-            className="px-3 py-1.5 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-bold text-gray-700 transition flex items-center justify-center"
+            className="px-3 py-1.5 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-bold text-gray-700 transition flex items-center justify-center shrink-0"
           >
             ← Home
           </a>
         ) : (
           <button 
             onClick={handleBack}
-            className="px-3 py-1.5 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-bold text-gray-700 transition"
+            className="px-3 py-1.5 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-bold text-gray-700 transition shrink-0"
           >
             ← Back
           </button>
         )}
-        <div className="flex gap-4 text-sm md:text-base">
+        <div className="flex gap-3 text-xs md:text-sm flex-wrap items-center">
            <div className="flex items-center gap-1">
              <span className="font-semibold text-gray-500">{mode === 'CLASSIC' ? 'Progress' : 'Score'}:</span>
              <span className="font-bold text-gray-800 tabular-nums">
@@ -480,7 +546,7 @@ export default function Game({ initialMode }: GameProps) {
              <span className="font-bold text-gray-800 tabular-nums">{timer.toFixed(2)}s</span>
            </div>
            {(mode === 'ARCADE' || mode === 'RUSH') && (
-             <div className="hidden md:flex items-center gap-1">
+             <div className="hidden sm:flex items-center gap-1">
                 <span className="font-semibold text-gray-500">Speed:</span>
                 <span className={`font-bold tabular-nums ${speed < 400 ? 'text-red-500' : 'text-gray-800'}`}>
                   {((mode === 'RUSH' ? INITIAL_SPEEDS.RUSH : INITIAL_SPEEDS.ARCADE) / speed).toFixed(1)}x
@@ -491,33 +557,26 @@ export default function Game({ initialMode }: GameProps) {
       </div>
 
       {/* Game Board */}
-      <div className="flex-1 relative w-full max-w-[400px] mx-auto bg-[#f5f5f5] border-x-4 border-gray-800 overflow-hidden touch-none">
+      <div className="flex-1 relative w-full max-w-[400px] mx-auto bg-[#f5f5f5] border-x-4 border-gray-800 overflow-hidden touch-none min-h-0">
          {/* Grid */}
          <div className="w-full h-full flex flex-col relative">
-            {rows.slice(0, 5).map((row, rIdx) => {
-               // 只有第一行（新添加的行）才播放滑入动画
-               const isNewRow = rIdx === 0;
-               return (
+            {rows.slice(0, 5).map((row, rIdx) => (
                <div 
                   key={row.id} 
-                  className={`w-full flex-1 flex border-b border-gray-200 min-h-0 transform-gpu will-change-transform game-row ${
-                     isNewRow ? 'animate-slideInFromTop' : ''
-                  }`}
+                  className="w-full flex-1 flex border-b border-gray-200 min-h-0 transform-gpu will-change-transform"
                >
                   {[0, 1, 2, 3].map((col) => {
                      const isBlack = row.blackIndex === col;
                      let bgClass = isBlack ? 'bg-[#1a1a1a]' : 'bg-white';
-                     let transitionClass = 'transition-all duration-150 ease-out';
                      
                      if (isBlack && row.clicked) {
                         bgClass = 'bg-gray-400';
                      }
                      if (isBlack && row.clicked && mode !== 'CLASSIC') {
                         bgClass = 'bg-green-500';
-                        transitionClass = 'transition-colors duration-200 ease-out';
                      }
                      if (row.missedIndex === col) {
-                        bgClass = 'bg-red-500 animate-shake';
+                        bgClass = 'bg-red-500';
                      }
                      
                      return (
@@ -531,19 +590,18 @@ export default function Game({ initialMode }: GameProps) {
                             e.preventDefault();
                             handleTileClick(rIdx, col, isBlack); 
                          }}
-                         className={`w-1/4 h-full border-r border-gray-200 relative cursor-pointer transform-gpu will-change-[background-color,transform] ${transitionClass} ${bgClass} active:scale-[0.96] active:brightness-90 select-none`}
+                         className={`w-1/4 h-full border-r border-gray-200 relative cursor-pointer transform-gpu will-change-[background-color] transition-colors duration-100 ease-linear ${bgClass} select-none`}
                        />
                      );
                   })}
                </div>
-               );
-            })}
+            ))}
          </div>
          
          {/* Countdown Overlay */}
          {status === 'COUNTDOWN' && (
-           <div className="absolute inset-0 bg-white/30 backdrop-blur-sm flex justify-center items-center z-50">
-             <div className="text-9xl font-black text-gray-800 animate-popIn drop-shadow-lg">
+           <div className="absolute inset-0 bg-white/30 backdrop-blur-sm flex justify-center items-center z-50 animate-fadeIn">
+             <div className="text-9xl font-black text-gray-800 drop-shadow-lg">
                {countdown === 0 ? 'GO!' : countdown}
              </div>
            </div>
@@ -555,24 +613,29 @@ export default function Game({ initialMode }: GameProps) {
               <h2 className="text-4xl font-bold mb-4">{result.success ? '🎉 Awesome!' : '😢 Game Over'}</h2>
               <div className="bg-white/10 p-6 rounded-xl mb-6 w-full">
                  <p className="text-xl mb-2">{mode === 'CLASSIC' ? (result.success ? `Time: ${timer.toFixed(2)}s` : 'Failed') : `Score: ${score}`}</p>
-                 {result.isNewRecord && <div className="text-yellow-400 font-bold animate-pulse">🏆 New Record!</div>}
+                 {result.isNewRecord && <div className="text-yellow-400 font-bold">🏆 New Record!</div>}
               </div>
               <div className="flex gap-4">
                 <button 
                   onClick={() => startGame(mode)}
-                  className="bg-primary hover:brightness-110 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition"
+                  className="bg-primary hover:brightness-110 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-opacity duration-150"
                 >
                   Play Again
                 </button>
                 <button 
                   onClick={handleMenuBtn}
-                  className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition"
+                  className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-opacity duration-150"
                 >
-                  Menu
+                  Home
                 </button>
               </div>
            </div>
          )}
+      </div>
+
+      {/* Ad Space - Reserved for future ads */}
+      <div className="w-full h-[50px] shrink-0 bg-transparent flex items-center justify-center">
+        {/* Ad Space Reserved for Future Ads */}
       </div>
     </div>
   );
