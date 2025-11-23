@@ -66,7 +66,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
       images: ['/og-image.png'],
     },
     alternates: {
-      canonical: `/mode/${mode}`,
+      canonical: 'https://pianotilesgames.com',
     },
   };
 }
