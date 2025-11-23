@@ -417,7 +417,7 @@ export default function Game({ initialMode }: GameProps) {
 
   if (status === 'MENU') {
     return (
-      <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-[#f5f7fa] md:bg-white md:rounded-xl">
+      <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-gradient-to-b from-[#f5f7fa] to-white md:bg-white md:rounded-xl">
         {/* Game Mode Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {[
@@ -429,16 +429,16 @@ export default function Game({ initialMode }: GameProps) {
             <a 
               key={m.id}
               href={`/mode/${m.id.toLowerCase()}`}
-              className="bg-white md:bg-gray-50 p-5 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex md:block items-center md:text-center gap-4 border border-gray-100"
+              className="bg-white p-5 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex md:flex-col items-center md:text-center gap-4 border-2 border-gray-200 hover:border-primary/30 group"
             >
-              <div className="text-4xl md:text-5xl md:mb-3 w-12 md:w-auto text-center flex justify-center">
-                 <m.icon size={40} className="text-gray-700" />
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-secondary/20 transition-all">
+                 <m.icon size={32} className="text-gray-700 group-hover:text-primary transition-colors" />
               </div>
               <div className="flex-1 text-left md:text-center">
-                <h2 className="text-xl font-bold text-gray-800">{m.label}</h2>
-                <p className="text-gray-500 text-sm">{m.desc}</p>
+                <h2 className="text-xl font-bold text-gray-800 mb-1">{m.label}</h2>
+                <p className="text-gray-600 text-sm mb-1">{m.desc}</p>
                 <p className="text-gray-400 text-xs">{m.sub}</p>
-                <div className="mt-2 pt-2 border-t border-gray-100 text-sm font-bold text-primary">
+                <div className="mt-2 pt-2 border-t border-gray-200 text-sm font-bold text-primary">
                   Best: {formatScore(m.id as GameMode, highScores[m.id as keyof HighScores])}
                 </div>
               </div>
@@ -447,15 +447,15 @@ export default function Game({ initialMode }: GameProps) {
         </div>
 
         {/* Game Information - Combined Section */}
-        <div className="bg-white md:bg-gray-50 rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-5 shadow-md border border-gray-200">
           {/* How to Play Section */}
-          <h2 className="text-xl font-bold text-gray-800 mb-3">How to Play Piano Tiles</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-3">🎹 How to Play Piano Tiles</h2>
           <div className="space-y-3 text-sm text-gray-600 mb-6">
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">Basic Rules:</h3>
               <ul className="list-disc list-inside space-y-1 ml-2">
-                <li>Tap only the <strong>black tiles</strong> as they scroll down</li>
-                <li>Never tap the <strong>white tiles</strong> or you'll lose</li>
+                <li>Tap only the <strong className="text-gray-900">black tiles</strong> as they scroll down</li>
+                <li>Never tap the <strong className="text-gray-900">white tiles</strong> or you'll lose</li>
                 <li>Each correctly tapped black tile increases your score</li>
                 <li>Missing a black tile that reaches the bottom ends the game</li>
               </ul>
@@ -476,7 +476,7 @@ export default function Game({ initialMode }: GameProps) {
           </div>
 
           {/* Game Modes Section */}
-          <h2 className="text-xl font-bold text-gray-800 mb-3 mt-6 pt-6 border-t border-gray-200">Game Modes Explained</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-3 mt-6 pt-6 border-t border-gray-200">🎮 Game Modes Explained</h2>
           <div className="space-y-4 text-sm text-gray-600 mb-6">
             <div>
               <h3 className="font-semibold text-gray-800 mb-1">🎯 Classic Mode</h3>
@@ -497,7 +497,7 @@ export default function Game({ initialMode }: GameProps) {
           </div>
 
           {/* Game History Section */}
-          <h2 className="text-xl font-bold text-gray-800 mb-3 mt-6 pt-6 border-t border-gray-200">About Piano Tiles</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-3 mt-6 pt-6 border-t border-gray-200">📚 About Piano Tiles</h2>
           <div className="text-sm text-gray-600 space-y-3">
             <p className="leading-relaxed">
               Piano Tiles (also known as Don't Tap The White Tile or Magic Piano) is a classic rhythm game that became popular worldwide. 
