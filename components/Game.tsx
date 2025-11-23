@@ -346,20 +346,20 @@ export default function Game({ initialMode }: GameProps) {
     const newHighScores = { ...highScores };
     
     if (mode === 'CLASSIC') {
-       if (currentScore < currentBest) {
+       // Classic mode: lower time is better (Infinity means no record yet)
+       if (success && (currentBest === Infinity || currentScore < currentBest)) {
          newHighScores[mode] = currentScore;
-         isNewRecord = true;
+         isNewRecord = currentBest === Infinity || currentScore < currentBest;
+         setHighScores(newHighScores);
+         localStorage.setItem('pianoTilesHighScores', JSON.stringify(newHighScores));
        }
     } else {
        if (currentScore > currentBest) {
          newHighScores[mode] = currentScore;
          isNewRecord = true;
+         setHighScores(newHighScores);
+         localStorage.setItem('pianoTilesHighScores', JSON.stringify(newHighScores));
        }
-    }
-
-    if (isNewRecord) {
-       setHighScores(newHighScores);
-       localStorage.setItem('pianoTilesHighScores', JSON.stringify(newHighScores));
     }
 
     setResult({ success, isNewRecord });
