@@ -23,19 +23,19 @@ export function generateMetadata({ params }: PageProps): Metadata {
   const modeInfo = {
     classic: { 
       title: "Classic Mode", 
-      desc: "Play Piano Tiles Classic Mode free online! Tap 50 black tiles as fast as you can and beat your best time in this free rhythm game!" 
+      desc: "Play Piano Tiles Classic Mode free online! Tap 50 black tiles fast and beat your best time. No download required!" 
     },
     arcade: { 
       title: "Arcade Mode", 
-      desc: "Free Piano Tiles Arcade Mode - endless challenge with increasing speed. Play online for free and test your limits in this free music game!" 
+      desc: "Free Piano Tiles Arcade Mode - endless challenge with increasing speed. Play online and test your limits!" 
     },
     zen: { 
       title: "Zen Mode", 
-      desc: "Play Piano Tiles Zen Mode online free! How many black tiles can you tap in 30 seconds? No pressure, just accuracy in this free rhythm game!" 
+      desc: "Play Piano Tiles Zen Mode online free! Tap as many black tiles as you can in 30 seconds. No pressure, just accuracy!" 
     },
     rush: { 
       title: "Rush Mode", 
-      desc: "Free Piano Tiles Rush Mode - extreme speed for advanced players. Play online for free and challenge yourself in this fast-paced free music game!" 
+      desc: "Free Piano Tiles Rush Mode - extreme speed for advanced players. Play online and challenge yourself in fast-paced gameplay!" 
     },
   };
 
@@ -43,7 +43,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
 
   const info = modeInfo[mode as Mode];
   return {
-    title: `Piano Tiles - ${info.title}`,
+    title: `Piano Tiles ${info.title} | Play Free Online`,
     description: info.desc,
     openGraph: {
       title: `Play Piano Tiles: ${info.title}`,

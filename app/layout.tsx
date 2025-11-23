@@ -12,14 +12,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Piano Tiles - Play Online Free Rhythm Game | Don't Tap The White Tile Game",
-  description: "Play Piano Tiles online free! Challenge your reflexes in this addictive piano rhythm game. This free music game offers Classic, Arcade, Zen, and Rush modes - no download required!",
+  title: "Piano Tiles - Play Online Free | Rhythm Game",
+  description: "Play Piano Tiles online free! Tap black tiles, avoid white ones. Classic, Arcade, Zen & Rush modes. No download required!",
   keywords: ["Piano Tiles", "Don't Tap The White Tile", "Music Game", "Rhythm Game", "Arcade Game", "Reflex Game"],
   authors: [{ name: "Your Name" }],
   metadataBase: new URL('https://pianotilesgames.com'),
   openGraph: {
-    title: "Piano Tiles - Don't Tap The White Tile!",
-    description: "Play Piano Tiles online free! Challenge your reflexes in this addictive piano rhythm game. This free music game offers Classic, Arcade, Zen, and Rush modes - no download required!",
+    title: "Piano Tiles - Play Online Free | Rhythm Game",
+    description: "Play Piano Tiles online free! Tap black tiles, avoid white ones. Classic, Arcade, Zen & Rush modes. No download required!",
     type: "website",
     url: "https://pianotilesgames.com",
     images: [
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Piano Tiles - Don't Tap The White Tile!",
-    description: "Play Piano Tiles online free! Challenge your reflexes in this addictive piano rhythm game. This free music game offers Classic, Arcade, Zen, and Rush modes.",
+    title: "Piano Tiles - Play Online Free | Rhythm Game",
+    description: "Play Piano Tiles online free! Tap black tiles, avoid white ones. Classic, Arcade, Zen & Rush modes. No download required!",
     images: ['/og-image.png'],
   },
   alternates: {
