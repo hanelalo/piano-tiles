@@ -284,21 +284,29 @@ export default function Game({ initialMode }: GameProps) {
   };
 
   const handleTileClick = (rowIndex: number, colIndex: number, isBlack: boolean) => {
-    if (status !== 'PLAYING') return;
+    if (statusRef.current !== 'PLAYING') return;
 
     if (isBlack) {
-       const newRows = [...rows];
-       if (newRows[rowIndex].clicked) return;
+       const currentRows = rowsRef.current;
+       if (currentRows[rowIndex]?.clicked) return;
 
-       newRows[rowIndex].clicked = true;
-       setRows(newRows);
+       // 立即更新 ref，确保快速响应
+       const newRows = [...currentRows];
+       newRows[rowIndex] = { ...newRows[rowIndex], clicked: true };
        rowsRef.current = newRows;
        
-       playSound('click');
+       // 立即更新状态
+       setRows(newRows);
        
-       const newScore = score + 1;
-       setScore(newScore);
+       // 立即更新分数（使用 ref 避免闭包）
+       const newScore = scoreRef.current + 1;
        scoreRef.current = newScore;
+       setScore(newScore);
+       
+       // 音效异步播放，不阻塞主线程
+       requestAnimationFrame(() => {
+         playSound('click');
+       });
 
        if (mode === 'CLASSIC' && newScore >= CLASSIC_TARGET) {
          endGame(true);
@@ -316,11 +324,17 @@ export default function Game({ initialMode }: GameProps) {
        }
 
     } else {
-       const newRows = [...rows];
-       newRows[rowIndex].missedIndex = colIndex; 
-       setRows(newRows);
-       playSound('gameover');
-       endGame(false);
+       // 点击白块 - 游戏结束
+       const currentRows = rowsRef.current;
+       const newRows = [...currentRows];
+       newRows[rowIndex] = { ...newRows[rowIndex], missedIndex: colIndex };
+       rowsRef.current = newRows;
+       setRows([...newRows]);
+       
+       requestAnimationFrame(() => {
+         playSound('gameover');
+         endGame(false);
+       });
     }
   };
 
@@ -803,7 +817,7 @@ export default function Game({ initialMode }: GameProps) {
                         bgClass = 'bg-gray-400';
                      }
                      if (isBlack && row.clicked && mode !== 'CLASSIC') {
-                        bgClass = 'bg-green-500';
+                        bgClass = 'bg-gray-400';
                      }
                      if (row.missedIndex === col) {
                         bgClass = 'bg-red-500';
@@ -820,7 +834,8 @@ export default function Game({ initialMode }: GameProps) {
                             e.preventDefault();
                             handleTileClick(rIdx, col, isBlack); 
                          }}
-                         className={`w-1/4 h-full border-r border-gray-200 relative cursor-pointer transform-gpu will-change-[background-color] transition-colors duration-100 ease-linear ${bgClass} select-none`}
+                         className={`w-1/4 h-full border-r border-gray-200 relative cursor-pointer transform-gpu will-change-[background-color] ${bgClass} select-none`}
+                         style={{ transition: 'background-color 50ms ease-out' }}
                        />
                      );
                   })}
