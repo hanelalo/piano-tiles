@@ -7,7 +7,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "VideoGame",
     "name": "Piano Tiles",
-    "url": "https://pianotilesgames.com",
+    "url": "https://www.pianotilesgames.com",
     "description": "Play Piano Tiles online free! A fast-paced rhythm game where players must tap black tiles while avoiding white ones. This free music game features multiple game modes including Classic, Arcade, Zen, and Rush. Challenge your reflexes in this addictive online rhythm game!",
     "genre": ["Rhythm", "Arcade", "Music"],
     "gamePlatform": "Web Browser",

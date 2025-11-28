@@ -45,11 +45,19 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `Piano Tiles ${info.title} | Play Free Online`,
     description: info.desc,
+    robots: {
+      index: false, // 不索引模式页面，因为这些页面主要是游戏界面
+      follow: true, // 但允许跟踪链接
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
     openGraph: {
       title: `Play Piano Tiles: ${info.title}`,
       description: info.desc,
       type: "website",
-      url: `https://pianotilesgames.com/mode/${mode}`,
+      url: `https://www.pianotilesgames.com/mode/${mode}`,
       images: [
         {
           url: '/og-image.png',
@@ -66,7 +74,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
       images: ['/og-image.png'],
     },
     alternates: {
-      canonical: 'https://pianotilesgames.com',
+      canonical: 'https://www.pianotilesgames.com',
     },
   };
 }
@@ -86,12 +94,12 @@ export default function ModePage({ params }: PageProps) {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://pianotilesgames.com"
+      "item": "https://www.pianotilesgames.com"
     }, {
       "@type": "ListItem",
       "position": 2,
       "name": `${modeKey} Mode`,
-      "item": `https://pianotilesgames.com/mode/${params.mode}`
+      "item": `https://www.pianotilesgames.com/mode/${params.mode}`
     }]
   };
 

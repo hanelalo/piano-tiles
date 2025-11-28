@@ -35,7 +35,7 @@ export default function FooterLinks() {
           </a>
           <span className="text-gray-400">|</span>
           <a
-            href="https://link.zhihu.com/?target=https%3A%2F%2Fpianotilesgames.com"
+            href="https://link.zhihu.com/?target=https%3A%2F%2Fwww.pianotilesgames.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-600 hover:text-gray-800 underline transition-colors"

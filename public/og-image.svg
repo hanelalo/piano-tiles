@@ -48,8 +48,8 @@
   </text>
   
   <!-- Website URL -->
-  <text x="600" y="580" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="rgba(255,255,255,0.8)" text-anchor="middle">
-    pianotilesgames.com
+  <text x="600" y="580" font-family="Arial, sans-serif" font-size="26" font-weight="400" fill="rgba(255,255,255,0.8)" text-anchor="middle">
+    www.pianotilesgames.com
   </text>
   
   <!-- Decorative Piano Keys at Bottom -->

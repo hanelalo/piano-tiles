@@ -249,32 +249,32 @@ export default function Game({ initialMode }: GameProps) {
         const intervalMs = speedRef.current; // 实时获取最新速度
         
         if (elapsed >= intervalMs) {
-          const currentRows = rowsRef.current;
-          
-          if (moveCountRef.current >= ROWS) {
-             const lastRow = currentRows[currentRows.length - 1];
-             if (lastRow && !lastRow.clicked) {
-                playSound('gameover');
-                endGame(false);
-                return;
-             }
-          }
+      const currentRows = rowsRef.current;
+      
+      if (moveCountRef.current >= ROWS) {
+         const lastRow = currentRows[currentRows.length - 1];
+         if (lastRow && !lastRow.clicked) {
+            playSound('gameover');
+            endGame(false);
+            return;
+         }
+      }
 
           // 创建新行
-          const newRow: TileRow = {
+      const newRow: TileRow = {
             id: Date.now() + Math.random(), // 添加随机数以确保唯一性
-            blackIndex: Math.floor(Math.random() * COLS),
-            clicked: false
-          };
-          
-          const nextRows = [newRow, ...currentRows];
-          if (nextRows.length > ROWS + 1) {
-            nextRows.pop();
-          }
-          
-          rowsRef.current = nextRows;
+        blackIndex: Math.floor(Math.random() * COLS),
+        clicked: false
+      };
+      
+      const nextRows = [newRow, ...currentRows];
+      if (nextRows.length > ROWS + 1) {
+        nextRows.pop();
+      }
+      
+      rowsRef.current = nextRows;
           setRows([...nextRows]); // 创建新数组触发重新渲染
-          moveCountRef.current++;
+      moveCountRef.current++;
           lastUpdateTimeRef.current = currentTime;
         }
         
@@ -335,8 +335,8 @@ export default function Game({ initialMode }: GameProps) {
        setRows([...newRows]);
        
        requestAnimationFrame(() => {
-         playSound('gameover');
-         endGame(false);
+       playSound('gameover');
+       endGame(false);
        });
     }
   };
@@ -449,12 +449,12 @@ export default function Game({ initialMode }: GameProps) {
   const handleMenuBtn = () => {
     stopGame();
     analytics.backToHome(mode);
-    if (initialMode) {
-      window.location.href = '/';
-    } else {
-      setStatus('MENU');
+     if (initialMode) {
+       window.location.href = '/';
+     } else {
+       setStatus('MENU');
       statusRef.current = 'MENU';
-    }
+     }
   };
 
 
@@ -467,7 +467,7 @@ export default function Game({ initialMode }: GameProps) {
 
   return (
     <>
-      <div className="flex-1 w-full h-full flex flex-col bg-white md:rounded-xl shadow-xl overflow-hidden relative">
+    <div className="flex-1 w-full h-full flex flex-col bg-white md:rounded-xl shadow-xl overflow-hidden relative">
       {/* Game Header */}
       <div className="flex justify-between items-center p-3 bg-gray-50 border-b border-gray-100 z-20 flex-wrap gap-2 shrink-0">
         {initialMode ? (
@@ -600,7 +600,7 @@ export default function Game({ initialMode }: GameProps) {
       <div className="w-full h-[50px] shrink-0 bg-transparent flex items-center justify-center">
         {/* Ad Space Reserved for Future Ads */}
       </div>
-      </div>
+    </div>
     </>
   );
 }

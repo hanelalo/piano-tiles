@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   description: "Play Piano Tiles online free! Tap black tiles, avoid white ones. Classic, Arcade, Zen & Rush modes. No download required!",
   keywords: ["Piano Tiles", "Don't Tap The White Tile", "Music Game", "Rhythm Game", "Arcade Game", "Reflex Game"],
   authors: [{ name: "Your Name" }],
-  metadataBase: new URL('https://pianotilesgames.com'),
+  metadataBase: new URL('https://www.pianotilesgames.com'),
   openGraph: {
     title: "Piano Tiles - Play Online Free | Rhythm Game",
     description: "Play Piano Tiles online free! Tap black tiles, avoid white ones. Classic, Arcade, Zen & Rush modes. No download required!",
     type: "website",
-    url: "https://pianotilesgames.com",
+    url: "https://www.pianotilesgames.com",
     images: [
       {
         url: '/og-image.png',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://pianotilesgames.com',
+    canonical: 'https://www.pianotilesgames.com',
   },
   other: {
     'google-site-verification': '-qxTLBDiz_TiZ3Riyu_KNORmMwIrL929DrOaTLAJdXM',
