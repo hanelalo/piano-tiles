@@ -338,7 +338,7 @@ export default function Game({ initialMode }: GameProps) {
              const newSpeed = Math.max(MIN_SPEED, speedRef.current - drop);
              speedRef.current = newSpeed;
              setSpeed(newSpeed);
-             startGameLoop(); 
+             // 不需要重启游戏循环，速度变化会通过 speedRef.current 实时生效
           }
        }
 
