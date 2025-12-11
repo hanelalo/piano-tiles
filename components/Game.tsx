@@ -37,6 +37,10 @@ const INITIAL_SPEEDS = {
 };
 const MIN_SPEED = 150;
 const SPEED_DROP = 2;
+// Rush 模式自动加速配置
+const RUSH_AUTO_ACCEL_INTERVAL = 2000; // 每2秒自动加速一次
+const RUSH_AUTO_ACCEL_DROP = 5; // 每次自动加速减少的毫秒数
+const RUSH_CLICK_ACCEL_DROP = 6; // 每次点击减少的毫秒数（比 ARCADE 更快）
 
 interface GameProps {
   initialMode?: GameMode;
@@ -81,6 +85,7 @@ export default function Game({ initialMode }: GameProps) {
   const statusRef = useRef<GameStatus>(initialMode ? 'COUNTDOWN' : 'MENU');
   const lastUpdateTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number | null>(null);
+  const lastAutoAccelRef = useRef<number>(0); // 上次自动加速的时间（使用 performance.now()）
 
   // Effect: When initialMode prop changes (or on mount with prop), start game
   useEffect(() => {
@@ -197,6 +202,7 @@ export default function Game({ initialMode }: GameProps) {
     setScore(0);
     scoreRef.current = 0;
     setTimer(0);
+    lastAutoAccelRef.current = performance.now(); // 重置自动加速计时器
     
     let count = 3;
     const intv = setInterval(() => {
@@ -245,6 +251,16 @@ export default function Game({ initialMode }: GameProps) {
     const animate = (currentTime: number) => {
       // 继续动画循环（无论状态如何，都要检查，以便能继续运行）
       if (statusRef.current === 'PLAYING') {
+        // Rush 模式：基于时间的自动加速
+        if (modeRef.current === 'RUSH' && speedRef.current > MIN_SPEED) {
+          if (currentTime - lastAutoAccelRef.current >= RUSH_AUTO_ACCEL_INTERVAL) {
+            const newSpeed = Math.max(MIN_SPEED, speedRef.current - RUSH_AUTO_ACCEL_DROP);
+            speedRef.current = newSpeed;
+            setSpeed(newSpeed);
+            lastAutoAccelRef.current = currentTime;
+          }
+        }
+        
         const elapsed = currentTime - lastUpdateTimeRef.current;
         const intervalMs = speedRef.current; // 实时获取最新速度
         
@@ -318,7 +334,7 @@ export default function Game({ initialMode }: GameProps) {
 
        if (mode === 'ARCADE' || mode === 'RUSH') {
           if (speedRef.current > MIN_SPEED) {
-             const drop = mode === 'RUSH' ? SPEED_DROP * 1.5 : SPEED_DROP;
+             const drop = mode === 'RUSH' ? RUSH_CLICK_ACCEL_DROP : SPEED_DROP;
              const newSpeed = Math.max(MIN_SPEED, speedRef.current - drop);
              speedRef.current = newSpeed;
              setSpeed(newSpeed);
