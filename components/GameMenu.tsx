@@ -6,6 +6,7 @@ import GameInfoContent from "./GameInfoContent";
 import FooterLinks from "./FooterLinks";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsModal from "./TermsModal";
+import InFeedAd from "./InFeedAd";
 
 // Context for modal state management
 interface GameModalsContextType {
@@ -61,6 +62,9 @@ export default function GameMenu() {
   return (
     <GameModalsProvider>
       <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-gradient-to-b from-[#f5f7fa] to-white md:bg-white md:rounded-xl" data-game-container>
+        {/* In-Feed Ad */}
+        <InFeedAd className="mb-6" />
+        
         {/* Game Mode Cards */}
         <GameModeCards />
 
