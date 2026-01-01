@@ -1,8 +1,4 @@
-"use client";
-
-import InArticleAd from "./InArticleAd";
-
-// Game Information Content Component
+// Server Component - 游戏信息内容（完全静态）
 export default function GameInfoContent() {
   return (
     <div className="bg-white rounded-xl p-5 shadow-md border border-gray-200">
@@ -18,10 +14,6 @@ export default function GameInfoContent() {
             <li>Missing a black tile that reaches the bottom ends the game</li>
           </ul>
         </div>
-        
-        {/* In-Article Ad */}
-        <InArticleAd className="my-4" />
-        
         <div>
           <h3 className="font-semibold text-gray-800 mb-1">Tips for Success:</h3>
           <ul className="list-disc list-inside space-y-1 ml-2">
