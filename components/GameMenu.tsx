@@ -6,6 +6,7 @@ import GameInfoContent from "./GameInfoContent";
 import FooterLinks from "./FooterLinks";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsModal from "./TermsModal";
+import ResponsiveAd from "./ResponsiveAd";
 
 // Context for modal state management
 interface GameModalsContextType {
@@ -61,6 +62,12 @@ export default function GameMenu() {
   return (
     <GameModalsProvider>
       <div className="flex-1 w-full h-full overflow-y-auto p-5 no-scrollbar animate-fadeIn bg-gradient-to-b from-[#f5f7fa] to-white md:bg-white md:rounded-xl" data-game-container>
+        {/* Responsive Ad - Above Game Mode Cards */}
+        <ResponsiveAd 
+          adSlot="9052578028" 
+          className="mb-6 h-[100px] md:h-[200px]" 
+        />
+        
         {/* Game Mode Cards */}
         <GameModeCards />
 
