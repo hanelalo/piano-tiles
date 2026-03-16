@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { analytics } from "@/lib/analytics";
 import GameMenu from "./GameMenu";
-import ResponsiveAd from "./ResponsiveAd";
-import GameOverAd from "./GameOverAd";
+import AdsterraNativeBanner from "./AdsterraNativeBanner";
+
 
 // Types
 type GameMode = 'CLASSIC' | 'ARCADE' | 'ZEN' | 'RUSH';
@@ -584,9 +584,9 @@ export default function Game({ initialMode }: GameProps) {
            <div className="absolute inset-0 bg-black/85 flex flex-col justify-center items-center text-white z-50 animate-fadeIn p-8 text-center overflow-y-auto">
               <h2 className="text-4xl font-bold mb-4">{result.success ? '🎉 Awesome!' : '😢 Game Over'}</h2>
               
-              {/* Game Over Ad - Between title and score */}
-              <div className="w-full max-w-[350px] mb-4 h-[250px] md:h-[300px] overflow-hidden flex items-center justify-center">
-                <GameOverAd adSlot="1199984646" />
+              {/* Adsterra Native Banner Ad */}
+              <div className="w-full max-w-[350px] mb-4 overflow-hidden flex items-center justify-center">
+                <AdsterraNativeBanner />
               </div>
               
               <div className="bg-white/10 p-6 rounded-xl mb-4 w-full">
@@ -622,15 +622,6 @@ export default function Game({ initialMode }: GameProps) {
          )}
       </div>
 
-      {/* Bottom Ad Space - Temporarily disabled due to layout issues */}
-      {/* TODO: Fix ad layout before re-enabling */}
-      {/* <div className="w-full h-[100px] max-h-[100px] shrink-0 bg-gray-50 flex items-center justify-center overflow-hidden">
-        <ResponsiveAd 
-          adSlot="1199984646" 
-          className="" 
-          style={{ maxHeight: '100px', height: '100px' }}
-        />
-      </div> */}
     </div>
     </>
   );
