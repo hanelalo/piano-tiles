@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { analytics } from "@/lib/analytics";
 import GameMenu from "./GameMenu";
-import AdsterraNativeBanner from "./AdsterraNativeBanner";
+
 
 
 // Types
@@ -584,11 +584,7 @@ export default function Game({ initialMode }: GameProps) {
            <div className="absolute inset-0 bg-black/85 flex flex-col justify-center items-center text-white z-50 animate-fadeIn p-8 text-center overflow-y-auto">
               <h2 className="text-4xl font-bold mb-4">{result.success ? '🎉 Awesome!' : '😢 Game Over'}</h2>
               
-              {/* Adsterra Native Banner Ad */}
-              <div className="w-full max-w-[350px] mb-4 overflow-hidden flex items-center justify-center">
-                <AdsterraNativeBanner />
-              </div>
-              
+
               <div className="bg-white/10 p-6 rounded-xl mb-4 w-full">
                  <p className="text-xl mb-2">{mode === 'CLASSIC' ? (result.success ? `Time: ${timer.toFixed(2)}s` : 'Failed') : `Score: ${score}`}</p>
                  {result.isNewRecord && <div className="text-yellow-400 font-bold">🏆 New Record!</div>}

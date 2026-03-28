@@ -56,18 +56,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Adsterra Social Bar */}
-        <Script
-          async
-          data-cfasync="false"
-          src="https://pl28926446.effectivegatecpm.com/545877c05eec31a6018ae85fb868ac14/invoke.js"
-          strategy="afterInteractive"
-        />
       </head>
       <body>
-        {/* Adsterra Social Bar Container */}
-        <div id="container-545877c05eec31a6018ae85fb868ac14" />
-        
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-HM3XD8SQXN"
